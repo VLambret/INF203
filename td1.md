@@ -36,7 +36,15 @@ simple
 
 ## Evaluation
 
-# Fonctionnements de ce TD
+- 30 % premier DS
+- 20 % interros en TD
+- 50 % Examen final
+
+## Fonctionnements de ce TD
+
+Les supports pédagogiques de cette UE sont disponibles sur mon dépôt github :
+
+[https://github.com/VLambret/INF203](https://github.com/VLambret/INF203)
 
 # Commandes Unix connues
 
