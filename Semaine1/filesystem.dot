@@ -1,0 +1,24 @@
+digraph g{
+	racine -> boot;
+	racine -> etc;
+	racine -> home;
+	racine -> usr;
+	home -> Julien;
+	home -> Sarah;
+	Julien -> Musique;
+	Musique -> jazz;
+	Musique -> electro;
+	Sarah -> travail;
+	travail -> avengers;
+	travail -> rogue;
+
+	racine [label="/"];
+	jazz [label="jazz.mp3"];
+	electro [label="electro.mp3"];
+	avengers [label="Avengers.mkv"];
+	rogue [label="Rogue_one.avi"];
+
+	{rank=same; home; boot; usr}
+	{rank=same; Julien; Sarah}
+	{rank=same; Musique; travail;}
+}

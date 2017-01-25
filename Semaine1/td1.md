@@ -46,7 +46,42 @@ Les supports pédagogiques de cette UE sont disponibles sur mon dépôt github :
 
 [https://github.com/VLambret/INF203](https://github.com/VLambret/INF203)
 
-# Commandes Unix connues
+# Etat des lieux
+
+## Les commandes UNIX
+
+- Souvenir des commandes au premier semestre
+
+## Définitions
+
+- C'est quoi un fichier ?
+- C'est quoi Linux ?
+- C'est quoi la ligne de commande ?
+
+# Arborescence de fichiers
+
+## Exemple d'arborescence de fichier
+
+![](filesystem.dot.png)
+
+## Exemple d'arborescence de fichier 2
+
+![filesystem](filesystem.dot.png)
+
+## Exemple d'arborescence de fichier 3
+
+![filesystem.dot.png]
+
+[movie reel]: movie.gif
+
+## TEST
+
+Répertoire courant : **Julien**
+
+\includegraphics[keepaspectratio,width=\textwidth, height=.6\textheight]{filesystem.dot.png}
+
+- Chemin absolu : **/home/Julien/Musique/jazz.mp3**
+- Chemin relatif : **Musique/jazz.mp3**
 
 # OS : Interpréteur de commandes
 
@@ -55,7 +90,5 @@ Les supports pédagogiques de cette UE sont disponibles sur mon dépôt github :
 ## Utilité
 
 # cp
-
-# Arborescence de fichiers
 
 # Droits d'accès du système de fichiers
