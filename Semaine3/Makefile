@@ -1,4 +1,4 @@
-TARGETS=td1.pdf
+TARGETS=flux_pipes.pdf
 
 all: $(TARGETS)
 
