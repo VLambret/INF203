@@ -143,3 +143,149 @@ On peut placer la redirection également en début de commande :
 user@machine:~$ < dataFile ./add.sh
 5
 ```
+
+## Rediriger la sortie standard
+
+Pour rediriger la sortie standard il existe 2 possibilités
+
+- On la rediriger vers un nouveau fichier
+- On souhaite ajouter la sortie du programme à un fichier existant.
+
+## Redirection simple
+
+Pour cette redirection on utilise l'opérateur > comme ceci :
+
+```bash
+user@machine:~$ ls -l > contenuDisque.txt
+```
+
+- Si le fichier n'existe pas il est créé
+- Si le fichier existe son contenu est écrasé
+
+## Redirection en mode ajout
+
+Pour cette redirection on utilise l'opérateur >> comme ceci :
+
+```bash
+user@machine:~$ ls -l >> contenuDisque.txt
+```
+
+- Si le fichier n'existe pas il est créé
+- Si le fichier existe la sortie du programme est ajoutée à la fin du fichier
+
+## Redirection de la sortie d'erreur
+
+On utilise > et >> en les préfixant du numéro associé à la sortie d'erreur (2)
+
+```bash
+user@machine:~$ cp a 2> logError.txt
+user@machine:~$ cp a 2>> logError.txt
+```
+
+Note : ça marche aussi pour la sortie standard, les deux commandes suivantes sont équivalents :
+
+```bash
+user@machine:~$ ls -l > listeFichiers.txt
+user@machine:~$ ls -l 1> listeFichiers.txt
+```
+
+## /dev/null
+
+Des fois on veut juste conserver la sortie standard en ignorant les erreurs. Sous Unix on peut le faire en redirigeant la sortie d'erreur vers un fichier spécial du système : /dev/null
+
+```bash
+user@machine:~$ cp a 2> /dev/null
+```
+
+/dev/null peut-être vu comme un trou noir du système : c'est un fichier qu'on peut écrire mais qui ne conserve pas ce qu'on y écrit.
+
+# Redirection entre programmes
+
+## Le besoin
+
+Comme on l'a vu les opérateurs < > et >> permettent d'effectuer des redirections avec des fichiers.
+
+Souvent on trouve très pratique d'enchaîner plusieurs programmes. Cela signifie rediriger la sortie d'un programme vers l'entrée d'un autre programme.
+
+En shell on effectue cette opérateur à l'aide de l'opérateur |
+
+Note : l'opérateur | se prononce pipe (tube en anglais)
+
+## Exemple de besoin
+
+On souhaite savoir combien de TP d'INF203 sont déjà passé. Pour cela on peut :
+
+1) Lister le répertoire INF203
+2) Dans ce résultat conserver uniquement les TPs
+3) Dans ce résulat compter le nombre de lignes
+
+Construisons la commande y répondant en utilisant des pipes
+
+## 1ère étape
+
+On liste le répertoire courant avec ls. La sortie comporte plusieurs lignes :
+
+```bash
+lambret@IBMdebian:~/test$ ls -1
+memo_bash.pdf
+td1
+td2
+td3
+tp1
+tp2
+tp3
+```
+
+## Seconde étape
+
+On utilise sur cette sortie la commande grep afin de ne conserver que les lignes qui correspondent à un TP.
+
+Note : l'option -i permet d'ignorer la casse
+
+```bash
+lambret@IBMdebian:~/test$ ls -1 | grep -i TP
+tp1
+tp2
+tp3
+```
+
+## Troisième étape
+
+la commande wc compte des mots par défaut. En lui passant l'option -l elle compte des lignes à la place.
+
+```bash
+lambret@IBMdebian:~/test$ ls -1 | grep -i TP | wc -l
+3
+```
+
+## Qu'est-ce qu'un pipe ?
+
+Comme l'indique son nom anglais, un pipe est un tuyau.
+
+Ce qui est connecté à son entrée est redirigé vers sa sortie.
+
+L'entrée et la sortie standard sont des fichiers. Puisqu'on peut les manipuler avec un pipe cela signifie que l'entrée et la sortie du pipe sont aussi des fichiers.
+
+Note : En Unix tout est fichier. Cela signifie qu'un fichier est une interface d'accès à une ressource sur un modèle {open, read, write, close}. Il ne faut concevoir uniquement les fichiers Unix comme des fichiers sur le disque.
+
+# Ouverture
+
+## Historique
+
+Les flux tels qu'on les utilise ici on été spécifiés dans les années 1970 dans la première version d'Unix.
+
+Les tubes ont été introduit plus tard dans la troisième version d'Unix (1973)
+
+On continue de les utiliser car ce sont des interfaces simples et efficaces.
+
+## En dehors d'Unix
+
+Les concepts présentés ici ne sont pas spécifiques au shell, ce sont des services fournis par le système d'exploitation.
+
+On retrouve les notions de flux standard en dehors d'Unix, par exemple dans le monde Windows.
+
+- Sous Unix ce sont des interfaces historiquement privilégiées par les programmes car le shell fournir des outils puissants pour les manipuler
+- Sous Windows sont moins répandues car l'interface graphique propose une expérience utilisateur de plus haut niveau. La philosophie du système est de ne pas l'exposer à des fluxs de données bruts.
+
+
+
