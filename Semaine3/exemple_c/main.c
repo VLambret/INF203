@@ -4,8 +4,13 @@ int add(int n1, int n2) {
 	return n1 + n2;
 }
 
-int main(int argc, char **argv) {
+// commentaire
+int main() {
 	int result;
 	result = add(1, 2);
-	return result;
+
+	if (result = 2)
+		return result;
+	else
+		return 0;
 }

@@ -80,8 +80,244 @@ Pour faire la parallèle avec le français :
 
 # Compilation ou interprétation ?
 
-## Différence
+## L'interpréteur
 
-- Dans la compilation, on crée un binaire à partir du code source. Le programme exécuté sera ensuite le binaire seul.
+- L'interpréteur fonctionne a peu prêt comme le compilateur sauf pour la dernière étape.
+- Au lieu de créer un exécutable à partir de sa représentation interne il va chercher à l'exécuter directement
 
-- Dans les langages interprétés le code source est fait pour être exécuté par l'interpréteur. Cela signifie
+## Nombre d'appel
+
+- Pour un programme compilé le compilateur est appelé une fois puis le programme est exécuté indépendament.
+- Un programme compilé doit donc être entièrement traduit
+
+- Dans le cas d'un programme interprété l'interpréteur analyse le programme à chaque fois qu'il est exécuté.
+- Afin de gagner du temps un interpréteur se limite souvent à analyser et exécuter seulement ce qui est utile
+
+## Qu'est-ce qui est utile ?
+
+- Quand on exécute un programme il est rare qu'on exécute l'ensemble de ses instructions.
+- A chaque exécution le programme va passer dans une partie du code, par exemple une branche d'un `if else`. L'autre branche est donc du code mort.
+- Pour un compilateur ce code non utilisé doit compiler. Si il contient une erreur on ne peut donc pas exécuter le programme.
+- Pour un interpréteur ce code non utilisé est inutile pour son exécution, s'il contient une erreur cela ne pose pas de problème.
+
+# gcc
+
+## Utilisation simple
+
+On peut compiler un programme C assez facilement
+
+```bash
+gcc main.c
+```
+
+Mais l'exécutable alors généré se nomme a.out, ce n'est pas très clair
+
+## Nommer l'exécutable de sortie
+
+gcc permet de nommer l'exécutable généré à l'aide de l'option -o :
+
+```bash
+gcc main.c -o main
+```
+
+## Erreur stupide à éviter
+
+Faire attention à ne pas mettre le nom d'un fichier source après -o sinon le code source est écrasé.
+
+L'auto-complétion n'est pas toujours votre amie. (les gestionnaires de version de code oui par contre)
+
+```bash
+gcc main.c -o main.c
+gcc -o main.c main
+```
+
+## Afficher des erreurs
+
+Le C a été conçu pour de la programmation système. Un développeur système peut faire des choses dangereuses, le langage part du principe qu'il sait ce qu'il fait.
+
+En pratique, il existe de nombreuses constructions dangereuses mais légales. En voici une :
+```C
+if (result = 2)
+	return 1;
+else
+	return 0;
+```
+
+Dans ce code le if teste une affectation, c'est légal en C.
+
+## Afficher des erreurs
+
+Deux explications sont ici possibles
+- Le développeur s'est trompé et a mis = au lieu de == (très probable)
+- Le développeur souhaite vraiment tester une affectation. (peu proable.
+
+La compilation de ce bout de code ne provoque aucune erreur puisque c'est du code C valide :
+
+```bash
+gcc main.c
+```
+
+## L'option -Wall
+
+En ajoutant l'option -Wall (Warnings, all) à gcc il est un peu plus bavard :
+
+```C
+user@machine:~$ gcc -Wall main.c 
+main.c: In function ‘main’:
+main.c:11:2: warning: suggest parentheses around
+   assignment used as truth value [-Wparentheses]
+  if (result = 2)
+    ^
+```
+
+Il dit ici que c'est légal mais qu'il faut rajouter des parenthèses pour confirmer qu'on souhaite tester l'affectation.
+
+## L'option -Werror
+
+- Par défaut les warnings ne sont que des avertissements.
+- Un adage souvent vérifié en C est que : "Warning à la compilation, erreur à l'exécution`
+- Cela conduit de nombreux projet à considérer les warnings comme des erreurs.
+- On utilise très souvent -Wall et -Werror ensemble
+```bash
+gcc -Wall -Werror main.c
+```
+
+## L'option --pedantic
+
+- L'option --pedantic (attention, le tiret est double ici !) peut-être utilisé en complément de -Wall.
+- Une remarque de -Wall est toujours pertinente à regarder
+- Une remarque de --pedantic n'est pas toujours un problème. Des fois il fait remarquer que notre code n'est pas compatible avec d'anciennes versions de la norme C.
+
+```bash
+main.c:7:1: warning: C++ style comments are
+not allowed in ISO C90
+ // commentaire
+ ^
+```
+
+## Quels flags utiliser ?
+
+- Un bon développeur C utilise les flags -Wall et -Werror afin de détecter les erreurs au plus tôt.
+- Il compile souvent pour détecter les problèmes rapidement
+
+# Compiler plusieurs fichiers sources
+
+## Le problème
+
+- Il est possible de faire des programmes à l'aide d'un unique fichier source.
+- Toutefois, à partir d'une certaine complexité il est peu pratique de travailler sur un unique fichier source volumineux. On cherche à découper le programme en modules répondant chacun à un problème.
+- Il faut donc être capable de compiler plusieurs fichiers source pour créer le programme.
+
+## Première solution
+
+Il est possible d'indiquer plusieurs fichiers C à gcc
+
+```bash
+gcc -Wall -Werror fichier1.c fichier2.c main.c -o main
+```
+
+## Limites de la première solution
+
+- Pour quelques fichiers ça marche !
+
+- Pour de vrais projets c'est limité.
+
+- Le noyau linux comporte ~18000 fichiers sources C. Un être humain sain d'esprit ne souhaite pas utiliser 18000 fichiers dans une seule commande.
+
+- Si la compilation échoue, on recommence de zéro !
+- Si on modifie une ligne dans un fichier on recompile tout !
+
+## Seconde solution : la compilation intermédiaire
+
+- Une module C qui ne contient pas de fonction `main` ne peut pas servir à créer un exécutable
+- Mais on peut quand même transformer son code source en instruction, on crée alors un fichier objet
+- L'option -c de gcc permet de créer un fichier objet :
+
+```bash
+gcc -Wall -Werror -c fichier1.c
+```
+
+Un fichier fichier1.o est alors créé
+
+## Compiler avec des fichiers objets
+
+```bash
+gcc -Wall -Werror -c fichier1.c
+gcc -Wall -Werror -c fichier2.c
+gcc -Wall -Werror -c fichier3.c
+gcc fichier1.o fichier2.o fichier3.o -o main
+```
+
+## Avantages
+
+- En cas de modification on recompile juste ce qu'il faut pour faire marcher le programme
+- En cas d'erreur on conserve tout ce qui marche
+
+## L'édition de lien
+
+Quand on découpe son programme en modules, les modules communiquent entre eux :
+- par des appels de fonctions
+- par le partage de variables globales
+
+Question : Si un module fait appel à une fonction, comment la compilation peut marcher si elle ne connait pas la fonction ?
+
+## Interface d'une fonction
+
+Voici une fonction C
+
+```C
+int add(int n1, int n2) {
+	return n1 + n2;
+}
+```
+
+Ce qui est entre accolade c'est le corps de la fonction
+Ce qui est avant l'accolade c'est l'interface à laquelle répond la fonction
+
+## Prototype de fonction
+
+Pour appeler une fonction il est inutile de connaître sa mécanique interne.
+Il est juste nécessaire de savoir comment elle s'utilise :
+
+1. Comment elle s'appelle
+2. Quels sont des paramètres d'entrée
+3. Qu'est-ce qu'elle retourne ?
+
+Ces informations sont le prototype de la fonction.
+
+## Prototype de fonction
+
+Le prototype de la fonction précédente est le suivant :
+
+```C
+int add(int n1, int n2);
+```
+
+## Utilisation du prototype
+
+Voici le contenu du fichier main.c :
+
+```C
+int add(int n1, int n2);
+
+void main() {
+	return add(n1, n2);
+}
+```
+
+Ce fichier peut-être compilé en fichier objet car le compilateur dispose de toutes les informations pour compiler le corps de main.
+
+## Problème : ou trouver les fonctions ?
+
+Si on compile en fichier objet `add.c` et `main.c` on obtient deux fichiers objets : `add.o` et `main.o`
+
+- main.o utilise la fonction add
+- add.o contient la fonction add
+
+main.o n'est pas un exécutable complet car il fait appel à un symbole encore inconnu
+
+
+
+
+
+
