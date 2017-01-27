@@ -39,7 +39,7 @@ movb $0x61,%al
 Programmer en assembleur est possible, mais ce n'est pas pratique.
 
 - Les instructions étant simples, il en faut beaucoup pour faire des choses compliquées
-- Un jeu d'instruction étant spécifique à une famille de processeurs on ne peut pas écrire des programmes portables avec.
+- Un jeu d'instruction étant spécifique à une famille de processeurs on ne peut pas écrire des programmes portables sur plusieurs machines.
 - Au delà de programmes triviaux un développeur ne produit pas du code efficace et fonctionnel en assembleur
 
 # Le compilateur
@@ -53,16 +53,16 @@ Programmer en assembleur est possible, mais ce n'est pas pratique.
 ## Le code source
 
 - Le code source est fait pour être compris par un humain.
-- Sa syntaxe reste lourde car elle doit être compréhensible aussi par le compilateur
+- Il doit aussi être compréhensible pour un programme : le compilateur. Il est donc plus strict qu'un langage humain.
 
 ## Analyse lexicale et syntaxique
 
 Afin de transformer un code source en binaire exécutable le compilateur va effectuer différente étapes :
 
 1. Il analyse le code source pour identifier des éléments de bases (mots clefs du langages, noms, etc...)
-2. Il vérifie que ces éléments de base respectent la syntaxe du langage
+2. Il vérifie que ces éléments de base sont associés dans le respect de la syntaxe du langage
 
-Pour faire la parallèle avec le français :
+Pour faire le parallèle avec le français :
 
 1. Vérifier que les mots appartiennent bien au dictionnaire
 2. Vérifier que la grammaire des phrases est correcte
@@ -76,7 +76,7 @@ Pour faire la parallèle avec le français :
 ## Création de l'exécutable
 
 - Une fois le programme optimisé, le compilateur va traduire sa représentation interne en un programme exécutable
-- Pour cela il fait appel à un traducteur capable de transformer la représentation interne du programme vers le processeur ciblé
+- Pour cela il fait appel à un traducteur capable de transformer la représentation interne du programme en suite d'instructions pour le processeur ciblé
 
 # Compilation ou interprétation ?
 
@@ -96,7 +96,7 @@ Pour faire la parallèle avec le français :
 ## Qu'est-ce qui est utile ?
 
 - Quand on exécute un programme il est rare qu'on exécute l'ensemble de ses instructions.
-- A chaque exécution le programme va passer dans une partie du code, par exemple une branche d'un `if else`. L'autre branche est donc du code mort.
+- A chaque exécution le programme va passer dans une partie du code. Par exemple quand on passe dans une branche d'un `if else`l'autre branche n'est pas exécutée. 
 - Pour un compilateur ce code non utilisé doit compiler. Si il contient une erreur on ne peut donc pas exécuter le programme.
 - Pour un interpréteur ce code non utilisé est inutile pour son exécution, s'il contient une erreur cela ne pose pas de problème.
 
@@ -309,12 +309,24 @@ Ce fichier peut-être compilé en fichier objet car le compilateur dispose de to
 
 ## Problème : ou trouver les fonctions ?
 
-Si on compile en fichier objet `add.c` et `main.c` on obtient deux fichiers objets : `add.o` et `main.o`
+Si on compile en fichier objet `math.c` et `main.c` on obtient deux fichiers objets : `math.o` et `main.o`
 
 - main.o utilise la fonction add
-- add.o contient la fonction add
+- math.o contient la fonction add
 
-main.o n'est pas un exécutable complet car il fait appel à un symbole encore inconnu
+main.o n'est pas un exécutable complet car il fait appel à un symbole encore inconnu : add
+
+## Etape finale de compilation
+
+```bash
+gcc add.o main.o -o main
+```
+
+- Lors de cette étape, le compilateur cherche à créer un exécutable complet : c'est à dire que tous les symboles sont connus
+- Il va donc chercher dans les fichiers objets quels sont les symboles non résolus et quels sont les symboles disponibles
+- Si chaque symbole non résolu est lié à son implémentation dans un fichier objet la compilation est réussie
+
+On appelle l'étape de résolution de ces symboles l'édition de lien.
 
 
 
