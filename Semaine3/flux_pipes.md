@@ -52,7 +52,7 @@ Exemple de fonction C utilisant la sortie standard  :
 
 ```c
 printf("hacker vaillant rien d'impossible !\n");
-fprintf(stdin, "hacker vaillant rien d'impossible !\n");
+fprintf(stdout, "hacker vaillant rien d'impossible !\n");
 ```
 
 Exemple d'instruction shell utilisant la sortie standard :
