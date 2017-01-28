@@ -1,9 +1,21 @@
-CFLAGS= -s
+CFLAGS= -s -Wall -Werror
 
 all : main
 
-clean :
-	rm main
+main : main.o math.o
+	gcc $^ -o $@
 
-main : main.c
-	gcc $(CFLAGS) -o $@ $<
+main.o : math.h
+
+clean :
+	rm -f main *.o
+
+%.o : %.c
+	gcc -c $(CFLAGS) -o $@ $<
+
+show : main.o math.o
+	echo "math.o :"
+	@readelf --all math.o |grep add |grep GLOBAL
+	echo "main.o :"
+	@readelf --all main.o |grep add |grep GLOBAL
+

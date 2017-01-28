@@ -122,9 +122,9 @@ gcc main.c -o main
 
 ## Erreur stupide à éviter
 
-Faire attention à ne pas mettre le nom d'un fichier source après -o sinon le code source est écrasé.
+- Faire attention à ne pas mettre le nom d'un fichier source après -o sinon le code source est écrasé.
 
-L'auto-complétion n'est pas toujours votre amie. (les gestionnaires de version de code oui par contre)
+- L'auto-complétion n'est pas toujours votre amie. (les gestionnaires de version de code oui par contre)
 
 ```bash
 gcc main.c -o main.c
@@ -133,9 +133,10 @@ gcc -o main.c main
 
 ## Afficher des erreurs
 
-Le C a été conçu pour de la programmation système. Un développeur système peut faire des choses dangereuses, le langage part du principe qu'il sait ce qu'il fait.
+- Le C a été conçu pour de la programmation système. Un développeur système peut faire des choses dangereuses, le langage part du principe qu'il sait ce qu'il fait.
 
-En pratique, il existe de nombreuses constructions dangereuses mais légales. En voici une :
+- En pratique, il existe de nombreuses constructions dangereuses mais légales. En voici une :
+
 ```C
 if (result = 2)
 	return 1;
@@ -147,7 +148,8 @@ Dans ce code le if teste une affectation, c'est légal en C.
 
 ## Afficher des erreurs
 
-Deux explications sont ici possibles
+Deux explications sont ici possibles :
+
 - Le développeur s'est trompé et a mis = au lieu de == (très probable)
 - Le développeur souhaite vraiment tester une affectation. (peu proable.
 
@@ -175,7 +177,7 @@ Il dit ici que c'est légal mais qu'il faut rajouter des parenthèses pour confi
 ## L'option -Werror
 
 - Par défaut les warnings ne sont que des avertissements.
-- Un adage souvent vérifié en C est que : "Warning à la compilation, erreur à l'exécution`
+- Un adage souvent vérifié en C est : "Warning à la compilation, erreur à l'exécution`
 - Cela conduit de nombreux projet à considérer les warnings comme des erreurs.
 - On utilise très souvent -Wall et -Werror ensemble
 ```bash
@@ -230,7 +232,7 @@ gcc -Wall -Werror fichier1.c fichier2.c main.c -o main
 ## Seconde solution : la compilation intermédiaire
 
 - Une module C qui ne contient pas de fonction `main` ne peut pas servir à créer un exécutable
-- Mais on peut quand même transformer son code source en instruction, on crée alors un fichier objet
+- Mais on peut quand même transformer son code source en instructions, on crée alors un fichier objet
 - L'option -c de gcc permet de créer un fichier objet :
 
 ```bash
@@ -240,6 +242,8 @@ gcc -Wall -Werror -c fichier1.c
 Un fichier fichier1.o est alors créé
 
 ## Compiler avec des fichiers objets
+
+On peut ensuite compiler ces fichier objets ensemble pour créer l'exécutable.
 
 ```bash
 gcc -Wall -Werror -c fichier1.c
@@ -256,6 +260,7 @@ gcc fichier1.o fichier2.o fichier3.o -o main
 ## L'édition de lien
 
 Quand on découpe son programme en modules, les modules communiquent entre eux :
+
 - par des appels de fonctions
 - par le partage de variables globales
 
@@ -271,8 +276,8 @@ int add(int n1, int n2) {
 }
 ```
 
-Ce qui est entre accolade c'est le corps de la fonction
-Ce qui est avant l'accolade c'est l'interface à laquelle répond la fonction
+- Ce qui est entre accolade c'est le corps de la fonction
+- Ce qui est avant l'accolade c'est l'interface à laquelle répond la fonction
 
 ## Prototype de fonction
 
@@ -305,7 +310,7 @@ void main() {
 }
 ```
 
-Ce fichier peut-être compilé en fichier objet car le compilateur dispose de toutes les informations pour compiler le corps de main.
+- Ce fichier peut-être compilé en fichier objet car le compilateur dispose de toutes les informations pour compiler le corps de main : il sait comment il devra appeler la fonction.
 
 ## Problème : ou trouver les fonctions ?
 
@@ -314,7 +319,7 @@ Si on compile en fichier objet `math.c` et `main.c` on obtient deux fichiers obj
 - main.o utilise la fonction add
 - math.o contient la fonction add
 
-main.o n'est pas un exécutable complet car il fait appel à un symbole encore inconnu : add
+`main.o` n'est pas un exécutable complet car il fait appel à un symbole encore inconnu : `add`
 
 ## Etape finale de compilation
 
@@ -327,9 +332,3 @@ gcc add.o main.o -o main
 - Si chaque symbole non résolu est lié à son implémentation dans un fichier objet la compilation est réussie
 
 On appelle l'étape de résolution de ces symboles l'édition de lien.
-
-
-
-
-
-
