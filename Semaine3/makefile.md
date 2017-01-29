@@ -79,6 +79,7 @@ Plusieurs approches sont possibles, l'une d'elle est d'utiliser la commande make
 
 - la commande make repose sur un fichier Makefile décrivant le projet
 - Ce Makefile décrit les dépendances et les commandes pour construire le système
+- `make` recherche le Makefile dans le répertoire courant
 
 ## Syntaxe générale :
 
@@ -116,6 +117,24 @@ math.o : math.c math.h
 
 ## Utilisation
 
-Quand on tape la commande `make`
+- Pour compiler le programme on peut taper : `make target`
+- `target` peut-être n'importe quelle cible décrite dans le Makefile
+- `make` va recompiler ce qui est nécessaire pour recompiler la cible
+- Si rien n'est nécessaire, `make` n'exécute aucune commande
+- `make` est pensé pour que les cibles soient des noms de fichiers
 
+## Quand recompiler une cible ?
+
+- Si le fichier de la cible n'existe pas
+- Si une de ses dépendances doit être recompilée
+- Si le fichier d'une de ses dépendances est plus récent que la cible
+
+## La première règle
+
+- Un appel à `make` sans argument construit la première cible du Makefile
+- Un usage courant est de créer une première règle all qui indique ce qu'il faut construire :
+
+```make
+all : main
+```
 
