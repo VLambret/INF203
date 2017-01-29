@@ -22,17 +22,22 @@
 
 Exemple d'instruction en binaire :
 
-```
+```asm
 10110000 01100001
 ```
 
 ## L'assembleur
 
-Le binaire n'étant pas facile à manipuler, on lui associe une représentation textuelle compréhensible par un humain lorsque c'est nécessaire.
+- Le binaire n'étant pas facile à manipuler
+- On lui associe une représentation textuelle compréhensible par un humain lorsque c'est nécessaire.
+
+Voici l'instruction précédente en assembleur :
 
 ```asm
 movb $0x61,%al
 ```
+
+Pas tellement plus clair...
 
 ## Programmer en assembleur
 
@@ -44,7 +49,7 @@ Programmer en assembleur est possible, mais ce n'est pas pratique.
 
 # Le compilateur
 
-## Role
+## Rôle
 
 - Les développeurs souhaitent programmer dans des langages de haut niveau (C, C++, Java, Ocaml, etc. )
 - Les développeurs souhaitent écrire un programme une fois et pouvoir l'exécuter sur des machines différentes
@@ -57,9 +62,9 @@ Programmer en assembleur est possible, mais ce n'est pas pratique.
 
 ## Analyse lexicale et syntaxique
 
-Afin de transformer un code source en binaire exécutable le compilateur va effectuer différente étapes :
+Afin de transformer un code source en binaire exécutable le compilateur va effectuer différentes étapes :
 
-1. Il analyse le code source pour identifier des éléments de bases (mots clefs du langages, noms, etc...)
+1. Il analyse le code source pour identifier des éléments de base (mots clefs du langage, noms, etc...)
 2. Il vérifie que ces éléments de base sont associés dans le respect de la syntaxe du langage
 
 Pour faire le parallèle avec le français :
@@ -96,8 +101,8 @@ Pour faire le parallèle avec le français :
 ## Qu'est-ce qui est utile ?
 
 - Quand on exécute un programme il est rare qu'on exécute l'ensemble de ses instructions.
-- A chaque exécution le programme va passer dans une partie du code. Par exemple quand on passe dans une branche d'un `if else`l'autre branche n'est pas exécutée. 
-- Pour un compilateur ce code non utilisé doit compiler. Si il contient une erreur on ne peut donc pas exécuter le programme.
+- A chaque exécution le programme va passer dans une partie du code. Par exemple quand on passe dans une branche d'un `if else` l'autre branche n'est pas exécutée. 
+- Pour un compilateur ce code non utilisé doit compiler. S'il contient une erreur on ne peut donc pas exécuter le programme.
 - Pour un interpréteur ce code non utilisé est inutile pour son exécution, s'il contient une erreur cela ne pose pas de problème.
 
 # gcc
@@ -110,7 +115,7 @@ On peut compiler un programme C assez facilement
 gcc main.c
 ```
 
-Mais l'exécutable alors généré se nomme a.out, ce n'est pas très clair
+Mais l'exécutable alors généré se nomme `a.out`, ce n'est pas très clair
 
 ## Nommer l'exécutable de sortie
 
@@ -151,7 +156,7 @@ Dans ce code le if teste une affectation, c'est légal en C.
 Deux explications sont ici possibles :
 
 - Le développeur s'est trompé et a mis = au lieu de == (très probable)
-- Le développeur souhaite vraiment tester une affectation. (peu proable.
+- Le développeur souhaite vraiment tester une affectation (peu probable).							    
 
 La compilation de ce bout de code ne provoque aucune erreur puisque c'est du code C valide :
 
@@ -161,7 +166,7 @@ gcc main.c
 
 ## L'option -Wall
 
-En ajoutant l'option -Wall (Warnings, all) à gcc il est un peu plus bavard :
+En ajoutant l'option `-Wall` (Warnings, all) à gcc il est un peu plus bavard :
 
 ```C
 user@machine:~$ gcc -Wall main.c 
@@ -177,18 +182,18 @@ Il dit ici que c'est légal mais qu'il faut rajouter des parenthèses pour confi
 ## L'option -Werror
 
 - Par défaut les warnings ne sont que des avertissements.
-- Un adage souvent vérifié en C est : "Warning à la compilation, erreur à l'exécution`
-- Cela conduit de nombreux projet à considérer les warnings comme des erreurs.
-- On utilise très souvent -Wall et -Werror ensemble
+- Un adage souvent vérifié en C est : "Warning à la compilation, erreur à l'exécution"
+- Cela conduit de nombreux projets à considérer les warnings comme des erreurs.
+- On utilise très souvent `-Wall` et `-Werror` ensemble
 ```bash
 gcc -Wall -Werror main.c
 ```
 
 ## L'option --pedantic
 
-- L'option --pedantic (attention, le tiret est double ici !) peut-être utilisé en complément de -Wall.
-- Une remarque de -Wall est toujours pertinente à regarder
-- Une remarque de --pedantic n'est pas toujours un problème. Des fois il fait remarquer que notre code n'est pas compatible avec d'anciennes versions de la norme C.
+- L'option `--pedantic` (attention, le tiret est double ici !) peut-être utilisée en complément de `-Wall`.
+- Une remarque de `-Wall` est toujours pertinente à regarder
+- Une remarque de `--pedantic` n'est pas toujours un problème. Des fois il fait remarquer que notre code n'est pas compatible avec d'anciennes versions de la norme C.
 
 ```bash
 main.c:7:1: warning: C++ style comments are
@@ -199,7 +204,7 @@ not allowed in ISO C90
 
 ## Quels flags utiliser ?
 
-- Un bon développeur C utilise les flags -Wall et -Werror afin de détecter les erreurs au plus tôt.
+- Un bon développeur C utilise les flags `-Wall` et `-Werror` afin de détecter les erreurs au plus tôt.
 - Il compile souvent pour détecter les problèmes rapidement
 
 # Compiler plusieurs fichiers sources
@@ -231,7 +236,7 @@ gcc -Wall -Werror fichier1.c fichier2.c main.c -o main
 
 ## Seconde solution : la compilation intermédiaire
 
-- Une module C qui ne contient pas de fonction `main` ne peut pas servir à créer un exécutable
+- Un module C qui ne contient pas de fonction `main` ne peut pas servir à créer un exécutable
 - Mais on peut quand même transformer son code source en instructions, on crée alors un fichier objet
 - L'option -c de gcc permet de créer un fichier objet :
 
@@ -276,7 +281,7 @@ int add(int n1, int n2) {
 }
 ```
 
-- Ce qui est entre accolade c'est le corps de la fonction
+- Ce qui est entre accolades c'est le corps de la fonction
 - Ce qui est avant l'accolade c'est l'interface à laquelle répond la fonction
 
 ## Prototype de fonction
@@ -284,11 +289,11 @@ int add(int n1, int n2) {
 Pour appeler une fonction il est inutile de connaître sa mécanique interne.
 Il est juste nécessaire de savoir comment elle s'utilise :
 
-1. Comment elle s'appelle
-2. Quels sont des paramètres d'entrée
+1. Comment elle s'appelle ?
+2. Quels sont ses paramètres d'entrée ?
 3. Qu'est-ce qu'elle retourne ?
 
-Ces informations sont le prototype de la fonction.
+Le prototype de la fonction répond à ces questions
 
 ## Prototype de fonction
 
@@ -300,7 +305,7 @@ int add(int n1, int n2);
 
 ## Utilisation du prototype
 
-Voici le contenu du fichier main.c :
+Voici le contenu du fichier `main.c` :
 
 ```C
 int add(int n1, int n2);
@@ -312,7 +317,7 @@ void main() {
 
 - Ce fichier peut-être compilé en fichier objet car le compilateur dispose de toutes les informations pour compiler le corps de main : il sait comment il devra appeler la fonction.
 
-## Problème : ou trouver les fonctions ?
+## Problème : où trouver les fonctions ?
 
 Si on compile en fichier objet `math.c` et `main.c` on obtient deux fichiers objets : `math.o` et `main.o`
 
