@@ -1,4 +1,5 @@
 CFLAGS= -s -Wall -Werror
+CFLAGS2 = -s -Wall -Werror
 
 all : main
 
@@ -18,4 +19,12 @@ show : main.o math.o
 	@readelf --all math.o |grep add |grep GLOBAL
 	echo "main.o :"
 	@readelf --all main.o |grep add |grep GLOBAL
+
+C = toto
+
+show2:
+	echo $(CFLAGS)
+	echo $(CFLAGS2)
+	echo $CFLAGS
+	echo $(CFLAGS3)
 
