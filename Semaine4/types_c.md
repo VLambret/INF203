@@ -87,7 +87,7 @@ int n4 = 0x10;      // hexadécimal
 - En C on peut utiliser plusieurs types de variables pour stocker un entier.
 - Chaque type d'entier est associé à une taille en mémoire.
 - En C la taille de ces types peut varier d'une architecture à l'autre.
-- Il existe des types standard pour préciser la taille de l'octet
+- Il existe des types standard pour préciser la taille de la variable en octet
 
 ```C
 char      : 1 octets
@@ -99,14 +99,14 @@ long long : 8 octets
 
 ## Intervalles de valeurs
 
-- On choisi le type en fonction de la taille de l'entier à représenter
+- On choisit le type en fonction de la taille de l'entier à représenter
 - Un octet contient 8 bits, on peut donc stocker 2^8, soit 256 valeurs différentes
 - Sur 4 octets, soit 32 bits on peut stocker 2^32, soit 4 294 967 296 valeurs différentes
 - Sur des entiers signés on dispose de la moitié de cette plage en positif, l'autre moitié en négatif
 
 ## Exercice
 
-- Combien de valeurs peut-on stocker sur les 5 doigts d'une main ?
+- Combien de valeurs peut-on représenter avec les 5 doigts d'une main ?
 
 ## Que choisir ?
 
@@ -126,15 +126,15 @@ long long : 8 octets
 ## Une représentation affichable
 
 ```
-30 40 50 60 70 80 90 100 110 120
+   30 40 50 60 70 80 90 100 110 120
  ---------------------------------
  0:    (  2  <  F  P  Z  d   n   x
  1:    )  3  =  G  Q  [  e   o   y
  2:    *  4  >  H  R  \  f   p   z
- 3: ! +  5  ? I  S  ]  g   q   {
+ 3: !  +  5  ?  I  S  ]  g   q   {
  4: "  ,  6  @  J  T  ^  h   r   |
  5: #  -  7  A  K  U  _  i   s   }
- 6: $  . 8  B  L  V  `  j   t   ~
+ 6: $  .  8  B  L  V  `  j   t   ~
  7: %  /  9  C  M  W  a  k   u  SUP
  8: &  0  :  D  N  X  b  l   v
  9: ´  1  ;  E  O  Y  c  m   w
@@ -171,9 +171,9 @@ i1=A, i2=65
 ```
 
 - La même chose !
-- Autrement dit : l'entier stocke aussi bien la valeur numérique d'un caractère, on perd juste de la place inutile.
+- Autrement dit : l'entier stocke aussi bien la valeur numérique d'un caractère qu'un char, on perd juste de la place inutile.
 
-# Exercice
+## Exercice
 
 - Ecrire le corps de la fonction C suivante :
 
@@ -181,8 +181,8 @@ i1=A, i2=65
 char capitalize(char c);
 ```
 
-- Si c est une lettre majuscule la fonction renvoie la lettre majuscule associée
-- Si la fonction n'est pas une lettre majuscule, renvoie c
+- Si c est une lettre minuscule la fonction renvoie la lettre majuscule associée
+- Si le paramètre n'est pas une lettre majuscule, renvoie c
 
 # Les tableaux
 
@@ -268,8 +268,8 @@ char name[20] = "Toto";
 'T' 'o' 't' 'o' '\0'
 ```
 
-- Le caractère '\0' termine la chaine.
-- Les fonctions C manipulant des chaînes (comme `puts`) dépendent de la présence de ce '\0' de fin pour bien fonctionner
+- Le caractère '\\0' termine la chaine.
+- Les fonctions C manipulant des chaînes (comme `puts`) dépendent de la présence de ce '\\0' de fin pour bien fonctionner
 
 ## Exercice
 
@@ -364,4 +364,86 @@ Les valeurs de x et y ne sont pas échangées
 - La taille de la case mémoire dépend du type
 - Toutes les cases mémoire ont une adresse
 
+## Obtenir l'adresse d'une variable
 
+En C on obtient l'adresse du variable à l'aide de l'opérateur `&`
+
+```C
+int variable;
+&variable
+```
+
+`&variable` est ici une adresse
+
+## Les pointeurs
+
+- On peut vouloir stocker une adresse dans une variable, ou la passer en paramètre d'une fonction
+- On a donc besoin de manipuler des variables dont le type est une adresse
+- Ces types sont nommés des pointeurs !
+
+## Déclaration d'un pointeur
+
+```C
+int n;
+int *pnombre;
+pnombre = &n;
+```
+
+- Le type de pnombre est `int *`
+- On précise dans le type d'un pointeur le type de contenu pointé
+
+## Remarque générale sur les pointeurs 1/3
+
+> L'erreur est humaine...
+>
+> -- <cite>Benjamin Franklin</cite>
+
+## Remarque générale sur les pointeurs 2/3
+
+> Mais pour les vraies bêtises il faut un ordinateur
+>
+> -- <cite>Benjamin Franklin</cite>
+
+## Remarque générale sur les pointeurs 2/3
+
+> Et les pointeurs pour ça c'est le top du top
+>
+> -- <cite>Benjamin Franklin</cite>
+
+## Passage de paramètre par référence
+
+- Tout en restant prudent, on peut maintenant modifier la fonction `echange` pour utiliser des pointeurs :
+
+```C
+void echange2 (int *pa, int *pb)
+{
+	int c;
+	c = *pa ;
+	*pa = *pb;
+	*pb = c;
+}
+```
+
+## Résultat de l'exécution
+
+```C
+int x= 42 ;
+int y= 13 ;
+
+echange2(&x, &y) ;
+printf("maintenant x vaut %d et y vaut %d \n", x, y) ;
+```
+
+donne à l'exécution :
+
+```
+maintenant x vaut 13 et y vaut 42
+```
+
+## Exercice
+
+- Ecrire une fonction qui convertie une chaîne de caractères en en entier :
+
+```C
+int mon_atoi(char chaine[]);
+```
