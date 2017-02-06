@@ -278,7 +278,7 @@ char name[20] = "Toto";
 - On réutilise ici la fonction capitalize précédente
 
 ```C
-void capitalizeWord(char * word);
+void capitalizeWord(char word[]);
 ```
 
 # struct
@@ -353,13 +353,13 @@ maintenant x vaut 42 et y vaut 13
 
 Les valeurs de x et y ne sont pas échangées
 
-## Passage de paramètre de fonction
+## Passage de paramètres de fonction
 
 - En C, les paramètres d'une fonction sont passés par copie
 - C'est à dire que les fonctions travaillent sur une copie des variables passées en paramètre
 - La fonction précédente a donc échangé les valeurs des copies mais pas des originaux ! 
 
-## Passage par référence
+## Les adresses de variables
 
 - En C, les variables sont stockées dans une case mémoire
 - La taille de la case mémoire dépend du type
@@ -405,13 +405,13 @@ pnombre = &n;
 >
 > -- <cite>Benjamin Franklin</cite>
 
-## Remarque générale sur les pointeurs 2/3
+## Remarque générale sur les pointeurs 3/3
 
 > Et les pointeurs pour ça c'est le top du top
 >
 > -- <cite>Benjamin Franklin</cite>
 
-## Passage de paramètre par référence
+## Passage de paramètres par référence
 
 - Tout en restant prudent, on peut maintenant modifier la fonction `echange` pour utiliser des pointeurs :
 
@@ -475,15 +475,16 @@ tname1 = tname2;
 donne l'erreur suivante :
 
 ```
-echange.c:35:9: error: assignment to expression with array type
+echange.c:35:9: error: assignment to expression with
+array type
   tname1 = tname2;
 ```
 
 ## Paramètres
 
-- Utilisé en tant que paramètre on peut utiliser la notation pointeur ou la notation tableau sans différence.
-- Les deux prototypes de fonctions sont ici parfaitement équivalents :
-- L'usage courant en C est en général d'utiliser la notation pointeur dans ce genre de cas
+- Dans les paramètres de fonction les notations pointeur et tableau ont la même signification
+- Les deux prototypes de fonctions sont donc ici parfaitement équivalents :
+- Devant ce choix en général les développeurs C utilisent la notation pointeur
 
 ```C
 int printString(char * string);
@@ -495,5 +496,5 @@ int printString(char string[]);
 - Ecrire une fonction qui convertit une chaîne de caractères en entier :
 
 ```C
-int mon_atoi(char chaine[]);
+int mon_atoi(char *chaine);
 ```
