@@ -188,7 +188,7 @@ char capitalize(char c);
 
 ## Déclaration
 
-- En C un tableau est un ensemble d'éléments consécutifs
+- En C un tableau est un ensemble d'éléments consécutifs de même type
 - On précise le nombre d'élements entre crochets
 
 ```C
@@ -239,7 +239,8 @@ char name[20] = "Bonjour !\n";
 Si la taille du buffer est insuffisante pour la chaîne stockée on obtient un warning :
 
 ```
-capitalize.c:12:17: warning: initializer-string for array of chars is too long
+capitalize.c:12:17: warning: initializer-string for array
+of chars is too long
   char name[5] = "Bonjour !\n";
 ```
 
@@ -255,7 +256,7 @@ putchar(name[999]);
 
 ## Connaître de la chaîne stockée
 
-- Comme on le voit ici la mémoire réservée peut-être bien plus grande que la taille de la chaîne stockée
+- Comme on le voit ici la mémoire réservée peut être bien plus grande que la taille de la chaîne stockée
 - Comment connaître la taille de la chaîne ?
 
 ```C
@@ -366,7 +367,7 @@ Les valeurs de x et y ne sont pas échangées
 
 ## Obtenir l'adresse d'une variable
 
-En C on obtient l'adresse du variable à l'aide de l'opérateur `&`
+En C on obtient l'adresse d'une variable à l'aide de l'opérateur `&`
 
 ```C
 int variable;
@@ -440,9 +441,58 @@ donne à l'exécution :
 maintenant x vaut 13 et y vaut 42
 ```
 
+# Pointeurs et tableaux
+
+## Similarités
+
+- On peut utiliser un pointeur comme si on accédait à un tableau :
+
+```C
+char tname[] = "Toto";
+char * pname = tname;
+
+putchar(tname[2]);
+putchar(pname[2]);
+```
+
+- ici les deux appels à putchar sont équivalents
+
+## Différences
+
+- Un pointeur est une variable de type adresse, on peut changer sa valeur
+- Cela signifie que l'objet pointé peut changer à l'exécution
+- Un tableau pointe toujours sur le même ensemble d'objets
+
+```C
+char tname1[] = "Sarah";
+char tname2[] = "Julien";
+char * pname = tname1;
+
+pname = tname2;
+tname1 = tname2;
+```
+
+donne l'erreur suivante :
+
+```
+echange.c:35:9: error: assignment to expression with array type
+  tname1 = tname2;
+```
+
+## Paramètres
+
+- Utilisé en tant que paramètre on peut utiliser la notation pointeur ou la notation tableau sans différence.
+- Les deux prototypes de fonctions sont ici parfaitement équivalents :
+- L'usage courant en C est en général d'utiliser la notation pointeur dans ce genre de cas
+
+```C
+int printString(char * string);
+int printString(char string[]);
+```
+
 ## Exercice
 
-- Ecrire une fonction qui convertie une chaîne de caractères en en entier :
+- Ecrire une fonction qui convertit une chaîne de caractères en entier :
 
 ```C
 int mon_atoi(char chaine[]);
