@@ -1,4 +1,4 @@
-% INF203 - Arguments de la ligne de commande
+% INF203 - Arguments & fichiers
 % Victor Lambret
 % 2017 - https://github.com/VLambret/INF203
 

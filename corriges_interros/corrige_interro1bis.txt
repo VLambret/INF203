@@ -1,0 +1,47 @@
+Q1)
+	ls *z
+	ls [0-9]*
+	ls ???
+	ls *a*b*
+
+Q2)
+a)	OUI
+	NON
+	NON
+	NON
+
+b) chmod o+rx ~sarah/correction
+
+Q3)
+a)
+#! /bin/bash
+
+b)
+if [ ! $# -eq 3 ]
+then
+	echo "erreur"
+	exit 1
+fi
+
+c)
+if [ $1 -gt $2 -o $2 -gt $3 ]
+then
+	echo "encore erreur"
+	exit 2
+fi
+
+d)
+echo $(( $1 + $2 + $3 ))
+
+Q4)
+a)      basename $FILE .sh
+
+b)
+for FILE in *.sh
+do
+	basename $FILE .sh
+done
+
+bonus)
+une chaine vide
+
