@@ -1,4 +1,4 @@
-TARGETS=arguments.pdf
+TARGETS=semaine5.pdf
 
 all: $(TARGETS)
 
