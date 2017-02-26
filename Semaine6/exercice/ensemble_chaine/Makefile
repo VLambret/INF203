@@ -1,11 +1,6 @@
-BINS = ensemble_chaine
+ensemble_chaine: ensemble_chaine.c test.c
+	gcc -Wall -Werror $^ -o $@
 
-.PHONY: all clean
+test: ensemble_chaine
+	./$<
 
-all: $(BINS)
-
-clean:
-	rm -f $(BINS)
-
-% : %.c
-	gcc -Wall -Werror $< -o $@
