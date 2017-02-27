@@ -76,7 +76,8 @@ int remove_element(struct ensemble *e, int n)
 	}
 
 	if (i < MAX_SIZE) {
-		e->elements[i] = e->elements[e->cardinal];
+		/* XXX : Problème trouvé : l'indice du dernier élément du tableau n'est pas cardinal, c'est cardinal -1 */
+		e->elements[i] = e->elements[e->cardinal - 1];
 		e->cardinal--;
 		return 1;
 	} else {
