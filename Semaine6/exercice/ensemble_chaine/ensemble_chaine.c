@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 
 	add_element(&e1, 2);
 	rt = add_element(&e1, 2);
+	print_ensemble(&e1);
 	test_expect(rt == -1, "Insertion d'un nombre déjà présent");
 
 	add_element(&e1, 3);
@@ -49,7 +50,6 @@ int main(int argc, char *argv[])
 	test_expect(rt == 1, "Retirer un nombre d'un ensemble plein");
 
 	/* Vérification visuelle */
-	print_ensemble(&e2);
 
 	test_results();
 

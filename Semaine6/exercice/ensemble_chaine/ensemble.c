@@ -20,7 +20,7 @@ void print_ensemble(struct ensemble *e)
 /* Cette fonction initialise l'ensemble à l'ensemble vide */
 void init_empty(struct ensemble *e)
 {
-	return;
+	e->cardinal = 0;
 }
 
 /* Cette fonction vérifie si l'entier n est dans l'ensemble e
@@ -28,7 +28,13 @@ void init_empty(struct ensemble *e)
  */
 int check_presence(struct ensemble *e, int n)
 {
-	return 0;
+	int i;
+	for (i = 0; i < e->cardinal; i++) {
+		if (e->elements[i] == n) {
+			return 1;
+		}
+	}
+	return -1;
 }
 
 /* Cette fonction ajoute l'entier n à l'ensemble.
@@ -36,7 +42,17 @@ int check_presence(struct ensemble *e, int n)
  */
 int add_element(struct ensemble *e, int n)
 {
-	return 0;
+	if (check_presence(e, n) == 1) {
+		return -1;
+	}
+
+	if (e->cardinal >= MAX_SIZE) {
+		return -1;
+	}
+
+	e->elements[e->cardinal] = n;
+	e->cardinal++;
+	return 1;
 }
 
 /* Cette fonction supprimer l'entier n de l'ensemble
@@ -44,5 +60,22 @@ int add_element(struct ensemble *e, int n)
  */
 int remove_element(struct ensemble *e, int n)
 {
+	int i = 0;
+
+	if (check_presence(e, n) == -1) {
+		return -1;
+	}
+
+	if (e->cardinal == 0) {
+		return -1;
+	}
+
+	while(e->elements[i] != n) {
+		i++;
+	}
+
+	e->elements[i] = e->elements[e->cardinal - 1];
+	e->cardinal--;
+
 	return 0;
 }
