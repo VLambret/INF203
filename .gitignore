@@ -3,3 +3,6 @@
 *.dot.png
 a.out
 *.o
+*.aux
+*.log
+*.gz
