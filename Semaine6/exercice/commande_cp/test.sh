@@ -1,6 +1,6 @@
 #! /bin/bash
 
-make test
+make
 
 ./a.out toto tata
 
