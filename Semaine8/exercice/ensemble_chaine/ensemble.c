@@ -23,6 +23,34 @@ void init_empty(struct ensemble *e)
 	e->cardinal = 0;
 }
 
+/* Cette fonction initialise l'ensemble à partir d'un fichier formaté avec un entier par ligne */
+int init_from_file(struct ensemble *e, char *filename)
+{
+	/* 1. On doit commencer à ouvrir le fichier avec les bons droits */
+	/* 2. Si va bien on va lire un entier sur chaque ligne dans le fichier */
+	FILE * f;
+	int n;
+
+	init_empty(e);
+
+	f = fopen(filename, "r");
+	if (f == NULL) {
+		fprintf(stderr, "file open error\n");
+		return -1;
+	}
+
+	while(EOF != fscanf(f, "%i", &n)) {
+		if (add_element(e, n) != 1) {
+			fprintf(stderr, "Erreur d'insertion\n");
+			return -1;
+		}
+	}
+
+	fclose(f);
+
+	return 1;
+}
+
 /* Cette fonction vérifie si l'entier n est dans l'ensemble e
  * elle renvoie 1 si il est présent, -1 sinon
  */
