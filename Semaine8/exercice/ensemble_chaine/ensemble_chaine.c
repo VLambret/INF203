@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	rt = add_element(&e2, MAX_SIZE);
 	test_expect(rt == -1, "Insertion dans un ensemble plein");
 
-	rt = remove_element(&e1, 2);
+	rt = remove_element(&e2, 2);
 	test_expect(rt == 1, "Retirer un nombre d'un ensemble plein");
 
 	/* Vérification visuelle */

@@ -77,5 +77,5 @@ int remove_element(struct ensemble *e, int n)
 	e->elements[i] = e->elements[e->cardinal - 1];
 	e->cardinal--;
 
-	return 0;
+	return 1;
 }
