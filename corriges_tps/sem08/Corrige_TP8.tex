@@ -1,0 +1,182 @@
+\documentclass[10pt]{article}
+
+\usepackage{graphics}
+\usepackage{dirtree}
+\usepackage{paracol}
+\usepackage{epigraph}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\setlength{\textwidth}{17cm}
+\setlength{\oddsidemargin}{-1cm}
+\setlength{\evensidemargin}{-1cm}
+\setlength{\textheight}{26cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3ex}
+
+\input{preambule.tex}
+
+\begin{document}
+\thispagestyle{empty}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{none}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=bash,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{black},
+  commentstyle=\itshape\color{black},
+  identifierstyle=\color{black},
+  stringstyle=\color{black},
+}
+
+\lstset{tabsize=3, style=customc,literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+}
+
+\EnteteUE
+
+\begin{center}
+  {\large {\bf Corrigé TP8}}
+\end{center}
+
+\vspace*{0.5cm}
+
+\begin{enumerate}[label=\textbf{[\alph*]}]
+  \setlength\itemsep{1em}
+
+\item Le code de la porte est 1234
+
+\item L'arrêt de la simulation est commandé par l'entrée ``\texttt{-}''
+
+\item Oui
+
+\item On stocke la seule sortie au milieu d'un immense tableau qui
+  autorise le stockage d'autant de sorties qu'il y a de transitions. Voir
+  en annexe le code la version 3 d'automate.c.
+
+  À chaque transition d'état, on affiche la sortie correspondante.
+
+\item On constate que l'implémentation n'autorise pas le changement
+  facile du code de la porte. Pour cela, il faut modifier le tableau
+  des transitions et le tableau des sorties.
+
+  On peut configurer un code comportant plusieurs fois le même
+  chiffre.
+
+\item La version 1 est catastrophique car le code de gestion de
+  l'automate et l'automate lui-même sont mélangés dans une seule
+  fonction. Il est souvent bon, en programmation, d'isoler les
+  concepts afin de pouvoir les modifier séparément les uns des
+  autres. On n'a pas envie de modifier le code des transitions
+  lorsqu'on souhaite simplement changer le message d'une sortie, par
+  exemple. \\
+
+  La version 2 propose une amélioration basique consistant à isoler le
+  calcul des transitions dans une fonction. On gagne déjà en
+  lisibilité, mais le fonctionnement reste identique. \\
+
+  La version 3 apporte la vraie amélioration : la
+  tabulation. L'automate est complètement défini par un tableau. Le
+  code ne sert qu'à l'interpréter pour reproduire le comportement
+  attendu. Cela va notamment faciliter la sauvegarde et le chargement
+  de l'automate dans un fichier externe.
+
+\item Le format retenu pour le fichier contenant le code de la porte
+  est de quatre chiffres séparés par une espace.
+
+\begin{verbatim}
+1 2 3 4
+\end{verbatim}
+
+  Une implémentation possible de la fonction de chargement de
+  l'automate Version 4 à partir d'un tel fichier :
+
+  \lstinputlisting[style=customc]{listing/automate4.c}
+
+\item Voir en annexe pour le code complet du programme supprimant les
+  commentaires en C.
+
+\item Voir en annexe pour le code complet du programme supprimant les
+  commentaires en Shell.
+
+\end{enumerate}
+
+\newpage
+\section*{Annexe 1 - Automates}
+  Implémentation possible de automate.c Version 1. Moralité : c'est
+  super long et pas très clair, vu que tout est mélangé.
+
+  \lstinputlisting[style=customc]{listing/automate1.c}
+
+  \vspace{1cm}
+  Implémentation possible de automate.c Version 2.
+
+  \lstinputlisting[style=customc]{listing/automate2.c}
+
+  \vspace{1cm}
+  Implémentation possible de automate.c Version 3.
+
+  \lstinputlisting[style=customc]{listing/automate3.c}
+
+  \newpage
+  \section*{Annexe 2 - Suppression commentaires C}
+  Le code du programme est réparti en 3 fichiers :
+  \texttt{automate.c}, \texttt{automate.h},
+  \texttt{supp\_comm\_C.c}. Voici le contenu de ces fichiers :
+
+  \lstinputlisting[style=customc,caption=supp\_comm\_sh.c]{listing/commc/supp_comm_C.c}
+  \lstinputlisting[style=customc,caption=automate.h]{listing/commc/automate.h}
+
+  \newpage
+  \lstinputlisting[style=customc,caption=automate.c]{listing/commc/automate.c}
+
+  \newpage
+  \section*{Annexe 3 - Suppression commentaires Shell}
+  On reprend largement le code de l'automate précédent pour supprimer
+  les commentaires en Shell.
+
+  \lstinputlisting[style=customc,caption=supp\_comm\_sh.c]{listing/commsh/supp_comm_sh.c}
+  \lstinputlisting[style=customc,caption=automate.h]{listing/commsh/automate.h}
+
+  \newpage
+  \lstinputlisting[style=customc,caption=automate.c]{listing/commsh/automate.c}
+
+\end{document}
