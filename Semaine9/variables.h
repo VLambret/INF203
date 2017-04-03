@@ -7,8 +7,7 @@
 /* Initialise les structures de données contenant les variables */
 void initialiser_variables();
 
-/* Renvoie l'indice de la variable dont le nom est passé en paramètre.
- * Si aucune variable de ce nom n'existe renvoie -1 */
+/* si la variable existe renvoie 1, sinon 0 */
 int trouver_variable(char *nom);
 
 char *valeur_variable(char *nom);

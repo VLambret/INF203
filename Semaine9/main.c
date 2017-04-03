@@ -27,11 +27,29 @@ void executer_commande()
 	}
 }
 
+#define NAME 0
+#define EGAL 1
+#define VALEUR 2
+
 /* Renvoie 1 si la ligne comporte une affectation. 0 Sinon.
  * Dans le cas ou la ligne contient une affectation cette fonction doit
  * aussi l'ajouter à la table des variables. */
 int trouver_affectation_variable(char *ligne) {
-	return 0;
+	int i = 0;
+	int affectation = 1;
+	int state = NAME;
+
+	while(ligne[i] != '\0') {
+		if (state == NAME) {
+
+		} else if (state == EGAL) {
+			
+		} else if (state == VALEUR) {
+
+		}
+	}
+
+	return affectation;
 }
 
 /*
@@ -48,9 +66,33 @@ void appliquer_expansion_variables(char *ligne_originale,
 	return;
 }
 
+void test_variables()
+{
+	int found;
+	initialiser_variables();
+	affecter_variable("CC", "gcc -Wall -Werror");
+	found = trouver_variable("CC");
+	if (found == 1)
+		printf("OK\n");
+	else
+		printf("ERREUR\n");
+}
+
 int main(int argc, char*argv[])
 {
+	if (argc != 2) {
+		fprintf(stderr, "ERROR : nombre d'arguments invalide\n");
+		exit(1);
+	}
+
+	test_variables();
 	fichier = fopen(argv[1], "r");
+
+	if (fichier == NULL) {
+		fprintf(stderr, "ERROR : erreur d'ouverture du fichier\n");
+		exit(1);
+	}
+
 	while (!feof(fichier)) {
 		lire_commande();
 		executer_commande();
