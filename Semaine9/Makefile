@@ -8,5 +8,5 @@ clean :
 test : interpreter
 	./interpreter example.sh
 
-interpreter : main.c
-	gcc -o $@ -g -Wall -Werror $^
+interpreter : main.c variables.c variables.h
+	gcc -o $@ -g -Wall -Werror *.c

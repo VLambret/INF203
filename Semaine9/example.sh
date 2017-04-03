@@ -1,3 +1,5 @@
 echo toto
 echo tata
-echo titi
+NAME=cunegonde
+echo "je m'appelle" $NAME
+
