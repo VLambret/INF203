@@ -19,12 +19,19 @@ void lire_commande()
 
 void executer_commande()
 {
-	printf("on execute : %s\n", commande);
-	system(commande);
+	if (commande[0] != '\0') {
+		printf("on execute : %s\n", commande);
+		system(commande);
+	}
 }
 
-                        int main(int argc,
-               char*argv[]){fichier=fopen(argv[1],
-           "r");;;{while(!feof(fichier)){lire_commande();
-              executer_commande();fclose(fichier);}}
-                      exit(0);;;;;;;;;;;;;;}
+int main(int argc, char*argv[])
+{
+	fichier = fopen(argv[1], "r");
+	while (!feof(fichier)) {
+		lire_commande();
+		executer_commande();
+	}
+	fclose(fichier);
+	exit(0);
+}
