@@ -23,15 +23,8 @@ void executer_commande()
 	system(commande);
 }
 
-int main (int argc, char *argv[])
-{
-	fichier = fopen(argv[1], "r");
-
-	while (!feof(fichier)) {
-		lire_commande();
-		executer_commande();
-	}
-
-	fclose (fichier);
-	exit(0);
-}
+                        int main(int argc,
+               char*argv[]){fichier=fopen(argv[1],
+           "r");;;{while(!feof(fichier)){lire_commande();
+              executer_commande();fclose(fichier);}}
+                      exit(0);;;;;;;;;;;;;;}
