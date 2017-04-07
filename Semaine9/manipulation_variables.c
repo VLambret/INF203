@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "manipulation_variables.h"
 #include "variables.h"
 
@@ -9,24 +10,34 @@
  * Dans le cas ou la ligne contient une affectation cette fonction doit
  * aussi l'ajouter à la table des variables. */
 int trouver_affectation_variable(char *ligne) {
-	return 0;
-/*
 	int i = 0;
-	int affectation = 1;
-	int state = NAME;
 
-	while(ligne[i] != '\0') {
-		if (state == NAME) {
-
-		} else if (state == EGAL) {
-			
-		} else if (state == VALEUR) {
-
-		}
+	// [ ]*
+	while(ligne[i] == ' ') {
+		i++;
 	}
 
-	return affectation;
-*/
+	if (ligne[i] == '=')
+		return 0;
+
+	// [a-zA-Z0-9_]+
+	while (ligne[i] != '\0' && ligne[i] != '=') {
+		if ((ligne[i] != '_' ) && 0 == isalnum(ligne[i])) {
+			return 0;
+		}
+		i++;
+	}
+
+	// =
+	while (ligne[i] != '\0') {
+		if (ligne[i] == '=') {
+			if (ligne[i - 1] != ' ' && ligne[i+1] != ' ') {
+				return 1;
+			}
+		}
+		i++;
+	}
+	return 0;
 }
 
 /*
