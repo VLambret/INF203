@@ -1,5 +1,12 @@
 .PHONY : all clean test
 
+SRC = variables.c
+HEADERS= variables.h
+
+TEST_EXE = interpreterTester
+TEST_SRC = test.c test_manipulation_variables.c
+TEST_HEADERS= test.h test_manipulation_variables.h
+
 all : interpreter
 
 clean :
@@ -8,5 +15,11 @@ clean :
 test : interpreter
 	./interpreter example.sh
 
-interpreter : main.c variables.c variables.h
-	gcc -o $@ -g -Wall -Werror *.c
+unit_test : $(TEST_EXE)
+	./$(TEST_EXE)
+
+$(TEST_EXE) : main_test.c $(SRC) $(TEST_SRC) $(TEST_HEADERS)
+	gcc -o $@ -Wall -Werror main_test.c $(SRC) $(TEST_SRC)
+
+interpreter : main.c $(SRC) $(HEADERS)
+	gcc -o $@ -g -Wall -Werror main.c $(SRC)

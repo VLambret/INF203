@@ -27,57 +27,6 @@ void executer_commande()
 	}
 }
 
-#define NAME 0
-#define EGAL 1
-#define VALEUR 2
-
-/* Renvoie 1 si la ligne comporte une affectation. 0 Sinon.
- * Dans le cas ou la ligne contient une affectation cette fonction doit
- * aussi l'ajouter à la table des variables. */
-int trouver_affectation_variable(char *ligne) {
-	int i = 0;
-	int affectation = 1;
-	int state = NAME;
-
-	while(ligne[i] != '\0') {
-		if (state == NAME) {
-
-		} else if (state == EGAL) {
-			
-		} else if (state == VALEUR) {
-
-		}
-	}
-
-	return affectation;
-}
-
-/*
-  appliquer_expansion_variables
-  Fonction qui prend une ligne lue en parametre et la recopie dans le tableau
-  resultat en remplacant toutes les utilisations de variable (de la forme
-  '$nom' ou nom est une chaine de caracteres alphanumeriques ou * ou #) par la
-  valeur de la variable correspondante.
-*/
-void appliquer_expansion_variables(char *ligne_originale,
-                                   char *ligne_expansee)
-{
-	strcpy(ligne_expansee, ligne_originale);
-	return;
-}
-
-void test_variables()
-{
-	int found;
-	initialiser_variables();
-	affecter_variable("CC", "gcc -Wall -Werror");
-	found = trouver_variable("CC");
-	if (found == 1)
-		printf("OK\n");
-	else
-		printf("ERREUR\n");
-}
-
 int main(int argc, char*argv[])
 {
 	if (argc != 2) {
@@ -85,7 +34,6 @@ int main(int argc, char*argv[])
 		exit(1);
 	}
 
-	test_variables();
 	fichier = fopen(argv[1], "r");
 
 	if (fichier == NULL) {
