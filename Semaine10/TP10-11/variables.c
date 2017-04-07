@@ -88,7 +88,7 @@ int trouver_affectation_variable(char *ligne) {
    valeur de la variable correspondante.
    */
 void appliquer_expansion_variables(char *ligne_originale,
-				   char *ligne_expansee) {
+                                   char *ligne_expansee) {
 	char *nom, *valeur, caractere_ecrase;
 	int i, j;
 

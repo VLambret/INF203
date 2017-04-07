@@ -19,7 +19,7 @@ unit_test : $(TEST_EXE)
 	./$(TEST_EXE)
 
 $(TEST_EXE) : main_test.c $(SRC) $(TEST_SRC) $(TEST_HEADERS)
-	gcc -o $@ -Wall -Werror main_test.c $(SRC) $(TEST_SRC)
+	gcc -o $@ -g -Wall -Werror main_test.c $(SRC) $(TEST_SRC)
 
 interpreter : main.c $(SRC) $(HEADERS)
 	gcc -o $@ -g -Wall -Werror main.c $(SRC)

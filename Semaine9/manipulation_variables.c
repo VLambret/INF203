@@ -11,6 +11,8 @@
  * aussi l'ajouter à la table des variables. */
 int trouver_affectation_variable(char *ligne) {
 	int i = 0;
+	char *nomVariable = "TOTO";
+	char *valeurVariable = "TATA";
 
 	// [ ]*
 	while(ligne[i] == ' ') {
@@ -20,6 +22,7 @@ int trouver_affectation_variable(char *ligne) {
 	if (ligne[i] == '=')
 		return 0;
 
+	nomVariable = &ligne[i];
 	// [a-zA-Z0-9_]+
 	while (ligne[i] != '\0' && ligne[i] != '=') {
 		if ((ligne[i] != '_' ) && 0 == isalnum(ligne[i])) {
@@ -32,6 +35,10 @@ int trouver_affectation_variable(char *ligne) {
 	while (ligne[i] != '\0') {
 		if (ligne[i] == '=') {
 			if (ligne[i - 1] != ' ' && ligne[i+1] != ' ') {
+				valeurVariable = valeurVariable;
+				nomVariable = nomVariable;
+				//affecter_variable(nomVariable, valeurVariable);
+				ligne[i] = '\0';
 				return 1;
 			}
 		}
