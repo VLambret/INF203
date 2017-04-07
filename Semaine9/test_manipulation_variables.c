@@ -43,9 +43,14 @@ void test_trouver_helper(char * ligne,
 
 void test_manipulation_variables_complete()
 {
-	test_trouver_helper("", 0, "", "", "chaine vide");
+	test_trouver_helper("", 0, "CC", "", "chaine vide");
+	test_trouver_helper("CC", 0, "CC", "", "nom seul");
+	test_trouver_helper("=", 0, "CC", "", "egal seul");
+	test_trouver_helper("=gcc", 0, "CC", "", "valeur seule");
 	test_trouver_helper("CC=gcc", 1, "CC", "gcc", "affectation normale");
+	test_trouver_helper("    CC=gcc", 1, "CC", "gcc", "affectation indentée");
 	test_trouver_helper("CC =gcc", 0, "CC", "", "espace avant egal");
 	test_trouver_helper("CC= gcc", 0, "CC", "", "espace apres egal");
 	test_trouver_helper("CC = gcc", 0, "CC", "", "espace autour du egal");
+	test_trouver_helper("CC=gcc ls", 1, "CC", "gcc", "commande apres affectation");
 }
