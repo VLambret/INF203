@@ -9,6 +9,8 @@
  * Dans le cas ou la ligne contient une affectation cette fonction doit
  * aussi l'ajouter à la table des variables. */
 int trouver_affectation_variable(char *ligne) {
+	return 0;
+/*
 	int i = 0;
 	int affectation = 1;
 	int state = NAME;
@@ -24,6 +26,7 @@ int trouver_affectation_variable(char *ligne) {
 	}
 
 	return affectation;
+*/
 }
 
 /*
@@ -36,6 +39,6 @@ int trouver_affectation_variable(char *ligne) {
 void appliquer_expansion_variables(char *ligne_originale,
                                    char *ligne_expansee)
 {
-	strcpy(ligne_expansee, ligne_originale);
+//	strcpy(ligne_expansee, ligne_originale);
 	return;
 }

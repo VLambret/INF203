@@ -1,7 +1,7 @@
 .PHONY : all clean test
 
-SRC = variables.c
-HEADERS= variables.h
+SRC = variables.c manipulation_variables.c
+HEADERS= variables.h manipulation_variables.h
 
 TEST_EXE = interpreterTester
 TEST_SRC = test.c test_manipulation_variables.c
@@ -10,7 +10,7 @@ TEST_HEADERS= test.h test_manipulation_variables.h
 all : interpreter
 
 clean :
-	rm -f *.o interpreter
+	rm -f *.o interpreter $(TEST_EXE)
 
 test : interpreter
 	./interpreter example.sh

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "test_manipulation_variables.h"
 #include "variables.h"
 #include "test.h"
 
@@ -23,6 +24,8 @@ int main(int argc, char*argv[])
 {
 	test_trouver_variable_ensemble_vide();
 	test_trouver_variable_unique();
+
+	test_manipulation_variables_complete();
 
 	test_results();
 
