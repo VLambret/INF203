@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <ctype.h>
 #include "manipulation_variables.h"
 #include "variables.h"
@@ -35,11 +36,11 @@ int trouver_affectation_variable(char *ligne) {
 	while (ligne[i] != '\0') {
 		if (ligne[i] == '=') {
 			if (ligne[i - 1] != ' ' && ligne[i+1] != ' ') {
-				valeurVariable = valeurVariable;
-				nomVariable = nomVariable;
+				fprintf(stderr, "nom_variable = %s\n", nomVariable);
+				ligne[i] = '\0';
+				valeurVariable = &ligne[i+1];
 				affecter_variable(nomVariable, valeurVariable);
 				print_variables_debug();
-				ligne[i] = '\0';
 				return 1;
 			}
 		}
