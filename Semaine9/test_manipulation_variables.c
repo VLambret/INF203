@@ -10,6 +10,7 @@ void appliquer_expansion_variables(char *ligne_originale,
 */
 
 #define CONCAT_BUFFER_SIZE 128
+#define MAX_LINE_LENGTH 256
 char concat_buffer[CONCAT_BUFFER_SIZE];
 
 char *concat(char *testName, char *specialCase) {
@@ -26,11 +27,13 @@ void test_trouver_helper(char * ligne,
                          char * testName) {
 	int retour;
 	char *valeurObtenue;
+	char ligne_buffer[MAX_LINE_LENGTH];
+	strncpy(ligne_buffer, ligne, MAX_LINE_LENGTH);
 
 	/* On initialise à l'ensemble vide afin de pouvoir facilement vérifier si la variable est ajoutée */
 	initialiser_variables();
 
-	retour = trouver_affectation_variable(ligne);
+	retour = trouver_affectation_variable(ligne_buffer);
 	test_expect (retour == retourAttendu, concat(testName, " trouver_affectation_variable"));
 
 	retour = trouver_variable(nomVariable);
