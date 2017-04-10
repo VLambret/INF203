@@ -72,3 +72,15 @@ void affecter_variable(char *nom, char *valeur)
 	strcpy(valeurs_variables[indice], valeur);
 	nombre_variables++;
 }
+
+void print_variables_debug() {
+	int i;
+	if (nombre_variables == 0) {
+		fprintf(stderr, "Aucune variable enregistrée\n");
+		return;
+	}
+
+	for (i = 0; i < nombre_variables; i++) {
+		fprintf(stderr, "       Variable[%d] : NOM={%s}, VAL={%s}\n", i, noms_variables[i], valeurs_variables[i]);
+	}
+}

@@ -37,7 +37,8 @@ int trouver_affectation_variable(char *ligne) {
 			if (ligne[i - 1] != ' ' && ligne[i+1] != ' ') {
 				valeurVariable = valeurVariable;
 				nomVariable = nomVariable;
-				//affecter_variable(nomVariable, valeurVariable);
+				affecter_variable(nomVariable, valeurVariable);
+				print_variables_debug();
 				ligne[i] = '\0';
 				return 1;
 			}

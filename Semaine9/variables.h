@@ -13,3 +13,5 @@ int trouver_variable(char *nom);
 char *valeur_variable(char *nom);
 
 void affecter_variable(char *nom, char *valeur);
+
+void print_variables_debug();
