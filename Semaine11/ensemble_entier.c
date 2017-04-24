@@ -41,3 +41,55 @@ void ajouter_entier(struct ensemble_entier *e, int entier)
 	e->nombre++;
 	return;
 }
+
+/* Sous ensemble */
+
+void sous_ensemble_multiple(struct ensemble_entier *e,
+                            int *sous_ensemble,
+                            int multiple)
+{
+	int i;
+
+	for (i = 0; i < e->nombre; i++) {
+		if (e->values[i] % multiple == 0) {
+			sous_ensemble[i] = 1;
+		} else {
+			sous_ensemble[i] = 0;
+		}
+	}
+}
+
+void se_union(int *se1, int *se2,
+           int *resultat)
+{
+	int i;
+	for (i = 0; i < NMAX; i++) {
+		if (se1[i] == 1 || se2[i] == 1)
+			resultat[i] = 1;
+		else
+			resultat[i] = 0;
+	}
+}
+
+void se_intersection(int *se1, int *se2,
+           int *resultat)
+{
+	int i;
+	for (i = 0; i < NMAX; i++) {
+		if (se1[i] == 1 && se2[i] == 1)
+			resultat[i] = 1;
+		else
+			resultat[i] = 0;
+	}
+}
+
+void print_sous_ensemble(struct ensemble_entier *e, int *sous_ensemble)
+{
+	int i;
+
+	for (i = 0; i < e->nombre; i++) {
+		if (sous_ensemble[i] == 1) {
+			printf("%d\n", e->values[i]);
+		}
+	}
+}
