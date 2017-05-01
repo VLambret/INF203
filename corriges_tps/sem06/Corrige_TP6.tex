@@ -1,0 +1,281 @@
+\documentclass[10pt]{article}
+
+\usepackage{graphics}
+\usepackage{dirtree}
+\usepackage{paracol}
+\usepackage{epigraph}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\setlength{\textwidth}{17cm}
+\setlength{\oddsidemargin}{-1cm}
+\setlength{\evensidemargin}{-1cm}
+\setlength{\textheight}{26cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3ex}
+
+\input{preambule.tex}
+
+\begin{document}
+\thispagestyle{empty}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{none}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=bash,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{black},
+  commentstyle=\itshape\color{black},
+  identifierstyle=\color{black},
+  stringstyle=\color{black},
+}
+
+\lstset{tabsize=3, style=customc,literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+}
+
+\EnteteUE
+
+\begin{center}
+  {\large {\bf Corrigé TP6}}
+\end{center}
+
+\vspace*{0.5cm}
+
+\begin{enumerate}[label=\textbf{[\alph*]}]
+  \setlength\itemsep{1em}
+
+\item Le type qui définira notre ensemble est \texttt{chaines}. Il
+  s'agit d'une structure contenant le cardinal de l'ensemble ainsi que
+  les chaînes contenues dans un tableau. Le tableau est déclaré
+  statiquement et l'on voit d'après les constantes
+  \texttt{NB\_MAX\_CHAINES} et \texttt{TAILLE\_MAX\_CHAINES} que l'on
+  pourra stocker au maximum 128 chaînes et que chacune fera au maximum
+  128 caractères.
+
+\item Pour compiler le programme, on tape simplement
+  \texttt{make}. L'exécution de \texttt{test\_chaines}, l'exécutable
+  obtenu, ne donne effectivement pas le résultat attendu.
+
+\begin{verbatim}
+$ ./test_chaines
+
+Copie successive des arguments dans l'ensemble :
+ bidule - machin - chose -
+Ensemble de chaines dans lequel la recherche est faite :
+Recherche de truc dans cet ensemble :
+ -- Chaine absente de l'ensemble
+\end{verbatim}
+
+\item Voici une implémentation possible.
+
+  \lstinputlisting{listing/chaines.c}
+
+\item La commande \texttt{wc} permet de compter les mots d'un fichier
+  ou d'un flux de caractère. Les options se déclinent ainsi :
+
+  \begin{description}
+  \item[-w] Compte les mots
+  \item[-c] Compte les caractères
+  \item[-l] Compte les lignes
+  \end{description}
+
+\item Voilà le résultat de la commande :
+
+\begin{verbatim}
+$ grep chateau Candide_chapitre1.txt | wc -l
+10
+\end{verbatim}
+
+  On sait que la commande \texttt{grep} affiche toutes les lignes d'un
+  fichier contenant le mot passer en paramètre. Le pipe suivi de la
+  commande \texttt{wc -l} permet de compter les lignes issues du
+  résultat du \texttt{grep}. On a donc le nombre d'occurence du mot
+  ``chateau'' dans le texte.
+
+\item Avec la commande suivante :
+
+\begin{verbatim}
+  $ grep Cunegonde Candide_chapitre1.txt | grep Candide | wc -l
+\end{verbatim}
+
+  On obtient le nombre de lignes contenant à la fois ``Cunégonde'' et
+  ``Candide''. Une seule ligne répond à la condition.
+
+\item Le fichier \texttt{client.h} contient la définition des types
+  représentant un client, \texttt{client} et un ensemble de clients,
+  \texttt{ensemble\_clients}. On pourrait imaginer avoir les valeurs
+  suivantes :
+
+\begin{verbatim}
+{
+    "T" : [
+        {
+            "nom" : [ "D", "u", "p", "o", "n", "d", "\0" ],
+            "compte" : 100
+        },
+        {
+            "nom" : [ "M", "a", "r", "t", "i", "n", "\0" ],
+            "compte" : 40
+        },
+        {
+            "nom" : [ "J", "o", "h", "n", "s", "o", "n", "\0" ],
+            "compte" : 250
+        }
+    ],
+    "nb" : 3
+}
+\end{verbatim}
+
+\item Pour compiler le fichier objet \texttt{clients\_in.o}, on
+  utilise la commande suivante :
+
+\begin{verbatim}
+  gcc -Wall -Wextra -Werror -c clients_in.c
+\end{verbatim}
+
+  NB: Toutes les options -W sont facultatives, mais fournissent une
+  aide précieuse.
+
+  On obtient le message d'erreur :
+
+\begin{verbatim}
+clients_in.c:7:23: erreur_: unknown type name «_ensemble_clients_»
+ void lire_les_clients(ensemble_clients *e, char *nom_fich) {
+                       ^~~~~~~~~~~~~~~~
+\end{verbatim}
+
+  Cela signifie que le type \texttt{ensemble\_clients} n'est pas
+  défini. Or, sa définition se trouve dans le fichier
+  \texttt{clients.h}. Cela nous met sur la voie d'un fichier header
+  manquant. Après investigation, on s'aperçoit qu'il manque le
+  include~: \texttt{\#include ``clients\_in.h''} qui lui-même contient
+  le include~: \texttt{\#include ``clients.h''}
+
+\item Les cibles des Makefile ont toujours la syntaxe suivante :
+
+\begin{verbatim}
+CIBLE: DEPENDENCE1 DEPENDENCE2 ...
+    REGLE_POUR_CREER_LA_CIBLE
+^~~~
+  |
+Ceci est une TABULATION et certainement pas des espaces
+\end{verbatim}
+
+  Pour créer le fichier objet \texttt{fich.o}, la syntaxe de la cible
+  Makefile sera de cette forme :
+
+\begin{verbatim}
+fich.o: fich.c fich.h autre_header.h
+    gcc -Wall -Wextra -Werror -c fich.c
+^~~~                          ^~
+  |                            |
+Toujours une TAB       L'option -c fait la compilation partielle
+\end{verbatim}
+
+\item L'exécutable \texttt{gestion} a besoin de tous les fichiers
+  objet générés précédemment. Soit :
+
+  \begin{itemize}
+  \item gestion.o
+  \item clients\_in.o
+  \item clients\_out.o
+  \item clients.o
+  \item operations.o
+  \end{itemize}
+
+  L'étape de création de l'exécutable s'appelle
+  \textbf{l'édition de lien}. À ce moment, on a fini de compiler tous
+  les fichiers source en fichiers objet. On n'a donc plus besoin des
+  \texttt{.c} ni des \texttt{.h}. Il ne reste plus qu'à faire le lien
+  entre les fonctions compilées et leurs appels.
+
+\item On se souvient que la commande \texttt{touch} permet de créer un
+  fichier vide ou de modifier la date de dernière modification d'un
+  fichier existant. On utilise donc la commande :
+
+\begin{verbatim}
+  touch *.c *.h
+\end{verbatim}
+
+\newpage
+\item Graphe de dépendences :
+
+  \input{Diagramme1.tex}
+
+\item Lorsqu'on exécute \texttt{getsion}, on s'aperçoit que le fichier
+  de sortie n'est pas créé. En observant le fichier
+  \texttt{clients\_out.c}, on voit que les fonctions
+  \texttt{ecrire\_les\_clients} et \texttt{ecrire\_les\_elements} sont
+  à compléter. Il est donc normal que le fichier de sortie ne soit pas
+  créé.
+
+\item Exemple d'implémentation de la fonction \texttt{ecrire\_les\_clients}:
+  \lstinputlisting{listing/clients_out.c}
+
+\item Lorqu'un client se fait un virement à lui-meme, son compte reste
+  identique.
+
+\item Même si un virement peut se décomposer en un retrait et un
+  dépot, la fonction \texttt{virement} ne peut pas se contenter
+  d'appeler successivement \texttt{retrait} et \texttt{depot} car ces
+  deux fonctions demandent à chaque fois à l'utilisateur de saisir le
+  montant de l'opération. L'utilisateur pourrait alors choisir deux
+  montants différents et faire ainsi un bénéfice substantiel.
+
+\item Dans la fonction \texttt{ecrire\_les\_elements}, le nombre
+  total d'éléments à écrire s'obtient en parcourant le tableau
+  \texttt{ens} et en sommant les case à 1 entre les indices 0 et
+  \texttt{e->nb}.
+
+\item Dans le fichier source \texttt{sous\_ensembles.c}, on utilise les
+  fichiers d'interface suivants :
+  \begin{itemize}
+  \item \texttt{\#include "clients.h"}
+  \item \texttt{\#include "clients\_out.h"}
+  \item \texttt{\#include "clients\_in.h"}
+  \end{itemize}
+
+\item Dans le fichier \texttt{sous\_ensembles.c}, on peut par exemple
+  implémenter les filtres suivants :
+  \lstinputlisting{listing/sous_ensembles.c}
+
+
+
+\end{enumerate}
+
+\end{document}
