@@ -2,27 +2,16 @@
 
 #define BUFFER_SIZE 16
 
-int my_cp(FILE *src, FILE *dest)
+void my_cp(FILE *src, FILE *dest)
 {
 	unsigned char buffer[BUFFER_SIZE];
 	size_t rd;
-	size_t wr;
-	int done = 0;
 
-	while (done == 0)
+	while (!feof(src))
 	{
 		rd = fread(buffer, 1, BUFFER_SIZE, src);
-		printf("rd = %d\n", rd);
-		if (rd == 0)
-		{
-			done = 1;
-		}
-
-		wr = fwrite(buffer, 1, rd, dest);
-		printf("wr = %d\n", wr);
+		fwrite(buffer, 1, rd, dest);
 	}
-
-	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -48,5 +37,6 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	return my_cp(source, dest);
+	my_cp(source, dest);
+	return 0;
 }
