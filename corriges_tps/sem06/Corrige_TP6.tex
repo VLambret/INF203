@@ -6,6 +6,7 @@
 \usepackage{epigraph}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{tikz}
 
 \setlength{\textwidth}{17cm}
 \setlength{\oddsidemargin}{-1cm}
@@ -141,16 +142,23 @@ $ grep chateau Candide_chapitre1.txt | wc -l
   suivantes :
 
 \begin{verbatim}
-typedef struct {
-        char nom[LGNOM_MAX];     -->  "Dupond"
-        int compte;              -->  12
-} client;
-
-typedef struct {
-        client T[NB_MAX];        -->  { client1, client2, client3 }
-        int nb;                  -->  3
-} ensemble_clients;
-
+{
+    "T" : [
+        {
+            "nom" : [ "D", "u", "p", "o", "n", "d", "\0" ],
+            "compte" : 100
+        },
+        {
+            "nom" : [ "M", "a", "r", "t", "i", "n", "\0" ],
+            "compte" : 40
+        },
+        {
+            "nom" : [ "J", "o", "h", "n", "s", "o", "n", "\0" ],
+            "compte" : 250
+        }
+    ],
+    "nb" : 3
+}
 \end{verbatim}
 
 \item Pour compiler le fichier objet \texttt{clients\_in.o}, on
@@ -166,10 +174,9 @@ typedef struct {
   On obtient le message d'erreur :
 
 \begin{verbatim}
-clients_in.c:7:23: erreur : unknown type name « ensemble_clients »
+clients_in.c:7:23: erreur_: unknown type name «_ensemble_clients_»
  void lire_les_clients(ensemble_clients *e, char *nom_fich) {
                        ^~~~~~~~~~~~~~~~
-
 \end{verbatim}
 
   Cela signifie que le type \texttt{ensemble\_clients} n'est pas
@@ -225,48 +232,49 @@ Toujours une TAB       L'option -c fait la compilation partielle
   touch *.c *.h
 \end{verbatim}
 
+\newpage
 \item Graphe de dépendences :
 
-\begin{verbatim}
-clients.c ------- \
-                   ->   clients.o         \
-clients.h ------- /                        |
-   ^                                       |
-   |                                       |
-   |                                       |
-clients_in.c ---- \                        |
-   |               \                       |
-   +-------------   ->   clients_in.o      |
-   |               /                       |
-clients_in.h ---- /                        |
-   | ^                                     |
-   | |                                     |
-   | |                                     |
-clients_out.c --- \
-   | |             \
-   +-------------   ->   clients_out.o
-   | |             /
-clients_out.h --- /
-   | | ^
-   | | |
-   | | |
-operations.c ---- \
-   | | |           \
-   +-------------   ->   operations.o
-   | | |           /
-operations.h ---- /
-   | | | ^
-   | | | |
-   | | | |
-   | | | +------- \
-   | | +---------  \
-   | +-----------   \
-   +-------------    -> gestion.o
-                    /
-                   /
-gestion.c ------- /
+  \input{Diagramme1.tex}
 
-\end{verbatim}
+\item Lorsqu'on exécute \texttt{getsion}, on s'aperçoit que le fichier
+  de sortie n'est pas créé. En observant le fichier
+  \texttt{clients\_out.c}, on voit que les fonctions
+  \texttt{ecrire\_les\_clients} et \texttt{ecrire\_les\_elements} sont
+  à compléter. Il est donc normal que le fichier de sortie ne soit pas
+  créé.
+
+\item Exemple d'implémentation de la fonction \texttt{ecrire\_les\_clients}:
+  \lstinputlisting{listing/clients_out.c}
+
+\item Lorqu'un client se fait un virement à lui-meme, son compte reste
+  identique.
+
+\item Même si un virement peut se décomposer en un retrait et un
+  dépot, la fonction \texttt{virement} ne peut pas se contenter
+  d'appeler successivement \texttt{retrait} et \texttt{depot} car ces
+  deux fonctions demandent à chaque fois à l'utilisateur de saisir le
+  montant de l'opération. L'utilisateur pourrait alors choisir deux
+  montants différents et faire ainsi un bénéfice substantiel.
+
+\item Dans la fonction \texttt{ecrire\_les\_elements}, le nombre
+  total d'éléments à écrire s'obtient en parcourant le tableau
+  \texttt{ens} et en sommant les case à 1 entre les indices 0 et
+  \texttt{e->nb}.
+
+\item Dans le fichier source \texttt{sous\_ensembles.c}, on utilise les
+  fichiers d'interface suivants :
+  \begin{itemize}
+  \item \texttt{\#include "clients.h"}
+  \item \texttt{\#include "clients\_out.h"}
+  \item \texttt{\#include "clients\_in.h"}
+  \end{itemize}
+
+\item Dans le fichier \texttt{sous\_ensembles.c}, on peut par exemple
+  implémenter les filtres suivants :
+  \lstinputlisting{listing/sous_ensembles.c}
+
+
 
 \end{enumerate}
 
