@@ -32,7 +32,7 @@ Courage à tous ! :-)
 
 exemple canonique : [la fonction cp](https://github.com/VLambret/INF203/blob/master/Semaine6/exercice/commande_cp/cp.c) donc à connaître par coeur. !
 
-## Manipulation d'ensembles
+## Manipulation d'ensembles
 
 - [Slides semaine 7 et 8 sur le site de l'UE](http://inf123.forge.imag.fr/)
 
