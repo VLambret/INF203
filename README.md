@@ -34,7 +34,7 @@ exemple canonique : [la fonction cp](https://github.com/VLambret/INF203/blob/mas
 
 ## Manipulation d'ensembles
 
-
+- [Slides semaine 7 et 8 sur le site de l'UE](http://inf123.forge.imag.fr/)
 
 ## Interpreteur 
 
@@ -46,7 +46,7 @@ exemple canonique : [la fonction cp](https://github.com/VLambret/INF203/blob/mas
 [noms_variables](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L16)
 [valeurs_variables](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L17)
 
-### Fonctions de gestion des variables
+**Fonctions de gestion des variables**
 
 - [trouver_variable](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L20)
 - [initialiser_variables](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L35)
@@ -55,7 +55,7 @@ exemple canonique : [la fonction cp](https://github.com/VLambret/INF203/blob/mas
 - [trouver_affectation_variable](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L63)
 - [appliquer_expansion_variables](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/variables.c#L92)
 
-### Fonctions de l'interpreteur
+**Fonctions de l'interpreteur**
 
 [decouper_ligne](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/interpreteur.c#L18)
 [lire_ligne_fichier](https://github.com/VLambret/INF203/blob/master/revisions/TP11-12/interpreteur.c#L57)
