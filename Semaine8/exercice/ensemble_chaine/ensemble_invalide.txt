@@ -1,4 +1,0 @@
-42
-#include <stdio.h>
-64
-75
