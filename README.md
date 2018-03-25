@@ -1,6 +1,6 @@
 # INF203
 
-Les corrections des interros sont disponibles [ici](interros) :
+Les corrections des interros et du partiel sont disponibles [ici](corrections) :
 
 ## Archives
 
