@@ -1,5 +1,9 @@
 # INF203
 
+## Memos
+
+Les [mémos](memos) sont des petites synthèses de certaines parties du cours/
+
 Les corrections des interros et du partiel sont disponibles [ici](corrections) :
 
 ## Archives
