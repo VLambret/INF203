@@ -1,6 +1,6 @@
 # Makefile
 
-## Graphe de dépendance
+## Graphe de dépendance
 
 Pour créer un Makefile on commence par écrire un graphe de dépendance. Pour cela on utilise trois règles :
 
@@ -10,9 +10,9 @@ Pour créer un Makefile on commence par écrire un graphe de dépendance. Pour c
 
 Si une dépendance est modifiée, on recrée la cible. Comme les fichiers `.c` et `.h` sont le code source de l'application ils ne sont jamais recréés. Cela signifie qu'aucune flêche ne doit aller vers un `.c` ou un `.h`.
 
-![../corrections/graph.png]
+![](https://github.com/VLambret/INF203/blob/master/corrections/graph.png)
 
-## Makefile
+## Makefile
 
 On traduit ensuite le graphe de dépendance en un fichier Makefile. Pour cela on écrit plusieurs règles de la forme suivante :
 

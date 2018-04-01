@@ -1,6 +1,6 @@
 # INF203
 
-## Memos
+## Memos
 
 Les [mémos](memos) sont des petites synthèses de certaines parties du cours/
 
