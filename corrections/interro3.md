@@ -36,6 +36,8 @@ gcc vide.txt 2> /dev/null
 Soit un programme composé des fichiers `main.c, pied.c, lib.c, lib.h`.  Les fichiers `main.c` et `lib.c` incluent `lib.h`. Dessiner les
 dépendances entre tous les fichiers : le code source, les fichiers .o et l’exécutable produit.
 
+![../corrections/graph.png]
+
 Donner la commande pour compiler `pied.c` en `pied.o`.
 
 ```bash

@@ -1,0 +1,20 @@
+digraph G {
+	lib_h -> main_o
+	lib_h -> lib_o
+
+	main_c -> main_o
+	lib_c -> lib_o
+	pied_c -> pied_o
+
+	main_o -> executable
+	pied_o -> executable
+	lib_o -> executable
+
+	main_c[label="main.c"]
+	main_o[label="main.o"]
+	pied_c[label="pied.c"]
+	pied_o[label="pied.o"]
+	lib_h[label="lib.h"]
+	lib_c[label="lib.c"]
+	lib_o[label="lib.o"]
+}
