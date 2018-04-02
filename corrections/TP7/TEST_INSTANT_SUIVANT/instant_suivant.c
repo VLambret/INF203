@@ -35,7 +35,7 @@ int main() {
 	  instant_suivant.heure = instant_courant.heure;
 	}
 
-	printf("nouvelle heure : %02d:%02d:%02d\n",
+	printf("%02d:%02d:%02d\n",
 	       instant_suivant.heure, instant_suivant.minute, 
 	       instant_suivant.seconde);
 

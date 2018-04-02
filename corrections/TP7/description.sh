@@ -7,6 +7,11 @@ do
 		if [ -x $FILE ]
 		then
 			echo "$FILE est un fichier executable"
+			if [ $FILE != $(basename $0) ]
+			then
+				mkdir -p Exec
+				cp $FILE Exec
+			fi
 		else
 			echo "$FILE est un fichier non executable"
 		fi
