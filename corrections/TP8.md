@@ -119,16 +119,11 @@ toto 175
 tata 50
 ```
 
+## Gestion d'un ensemble
 
+g) Pour indiquer l'exécutable que l'on veut produire il faut spécifier la cible à builder :
 
-
-
-
-
-
-
-
-
-
-
-
+```bash
+make billes
+make gestion
+```

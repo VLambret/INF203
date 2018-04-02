@@ -1,8 +1,17 @@
 billes : billes.o generer_entier.o joueurs.o joueurs_out.o joueurs_in.o
 	gcc billes.o generer_entier.o joueurs.o joueurs_out.o joueurs_in.o -o billes
 
-billes.o : billes.c generer_entier.h joueurs.h joueurs_out.h
+gestion : gestion.o operations.o joueurs.o joueurs_out.o joueurs_in.o
+	gcc gestion.o operations.o joueurs.o joueurs_out.o joueurs_in.o -o gestion
+
+billes.o : billes.c generer_entier.h joueurs_in.h joueurs_out.h
 	gcc -c billes.c
+
+gestion.o : gestion.c operations.h joueurs_in.h joueurs_out.h
+	gcc -c gestion.c
+
+operations.o : operations.c joueurs.h
+	gcc -c operations.c
 
 joueurs.o : joueurs.c joueurs.h
 	gcc -c joueurs.c
@@ -17,4 +26,4 @@ generer_entier.o : generer_entier.c
 	gcc -c generer_entier.c
 
 clean :
-	rm -f billes *.o
+	rm -f billes gestion Fichier_Joueurs *.o

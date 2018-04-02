@@ -36,6 +36,7 @@ int billes_joueur(joueurs *ens, int i) {
 }
 
 void modifier_billes(joueurs *ens, int i, int cpt) {
+	ens->T[i].nb_billes = cpt;
 }
 
 void afficher_ensemble_joueurs(joueurs *ens) {
