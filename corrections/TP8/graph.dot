@@ -1,0 +1,22 @@
+digraph G {
+	generer_entier_h -> billes_o
+	joueurs_h -> billes_o
+	joueurs_h -> joueurs_o
+
+	billes_c -> billes_o
+	joueurs_c -> joueurs_o
+	generer_entier_c -> generer_entier_o
+
+	billes_o -> billes
+	generer_entier_o -> billes
+	joueurs_o -> billes
+
+	billes_c[label="billes.c"]
+	billes_o[label="billes.o"]
+	generer_entier_h[label="generer_entier.h"]
+	generer_entier_c[label="generer_entier.c"]
+	generer_entier_o[label="generer_entier.o"]
+	joueurs_h[label="joueurs.h"]
+	joueurs_c[label="joueurs.c"]
+	joueurs_o[label="joueurs.o"]
+}
